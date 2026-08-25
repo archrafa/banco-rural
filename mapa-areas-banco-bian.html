@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mapa de Áreas e Domínios de um Banco Brasileiro × BIAN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#16202B;
+  --ink-2:#3A4A5A;
+  --muted:#67788A;
+  --paper:#E8ECF0;
+  --surface:#FFFFFF;
+  --line:#CBD5DE;
+  --line-soft:#E1E7ED;
+
+  --ref:#2E6F9E;
+  --sales:#12806A;
+  --ops:#6B4FA8;
+  --risk:#B2452C;
+  --sup:#7A6A2F;
+  --ext:#7A8899;
+
+  --accent:#2E6F9E;
+
+  --serif:"IBM Plex Serif",Georgia,serif;
+  --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+
+  --maxw:1240px;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---------- masthead ---------- */
+.masthead{
+  background:var(--ink);
+  color:#EDF1F5;
+  border-bottom:3px solid var(--accent);
+}
+.masthead-inner{
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding:44px 32px 34px;
+}
+.kicker{
+  font-family:var(--mono);
+  font-size:11.5px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:#8FA6BB;
+  margin:0 0 14px;
+}
+.masthead h1{
+  font-family:var(--serif);
+  font-weight:700;
+  font-size:clamp(28px,4.2vw,46px);
+  line-height:1.1;
+  letter-spacing:-.015em;
+  margin:0 0 12px;
+  max-width:22ch;
+}
+.masthead p.lede{
+  margin:0;
+  max-width:62ch;
+  color:#B6C6D4;
+  font-size:16.5px;
+}
+
+/* legend of BIAN business areas — this is the key to the whole document */
+.legend{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:26px;
+  padding-top:22px;
+  border-top:1px solid rgba(255,255,255,.14);
+}
+.legend-label{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:#8FA6BB;
+  width:100%;
+  margin-bottom:4px;
+}
+.chip{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-family:var(--mono);
+  font-size:11.5px;
+  letter-spacing:.04em;
+  padding:5px 11px 5px 9px;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:2px;
+  color:#D3DEE8;
+  background:rgba(255,255,255,.03);
+}
+.chip::before{
+  content:"";
+  width:9px;height:9px;
+  border-radius:1px;
+  background:var(--c);
+}
+.chip[data-a="ref"]{--c:#5B9AC9}
+.chip[data-a="sales"]{--c:#2BA98D}
+.chip[data-a="ops"]{--c:#9A7ED6}
+.chip[data-a="risk"]{--c:#DB6E51}
+.chip[data-a="sup"]{--c:#B3A05A}
+.chip[data-a="ext"]{--c:#93A3B3}
+
+/* ---------- shell ---------- */
+.shell{
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding:0 32px 100px;
+  display:grid;
+  grid-template-columns:246px 1fr;
+  gap:52px;
+  align-items:start;
+}
+
+/* ---------- sidebar ---------- */
+.toc{
+  position:sticky;
+  top:26px;
+  max-height:calc(100vh - 52px);
+  overflow-y:auto;
+  padding:30px 0 30px;
+  font-size:13.5px;
+  scrollbar-width:thin;
+}
+.toc h2{
+  font-family:var(--mono);
+  font-size:10.5px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin:0 0 12px;
+  font-weight:500;
+}
+.toc a{
+  display:block;
+  color:var(--ink-2);
+  text-decoration:none;
+  padding:5px 10px 5px 12px;
+  border-left:2px solid var(--line);
+  line-height:1.35;
+}
+.toc a:hover{color:var(--ink);background:rgba(255,255,255,.6)}
+.toc a.sub{padding-left:22px;font-size:12.8px;color:var(--muted)}
+.toc a.active{
+  color:var(--ink);
+  font-weight:600;
+  border-left-color:var(--accent);
+  background:var(--surface);
+}
+.toc a.sub[data-a]{border-left-color:var(--dot)}
+.toc a[data-a="ref"]{--dot:var(--ref)}
+.toc a[data-a="sales"]{--dot:var(--sales)}
+.toc a[data-a="ops"]{--dot:var(--ops)}
+.toc a[data-a="risk"]{--dot:var(--risk)}
+.toc a[data-a="sup"]{--dot:var(--sup)}
+.toc-gap{height:14px}
+.toc a:focus-visible,main a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ---------- main ---------- */
+main{padding-top:30px;min-width:0}
+
+section{margin-bottom:56px;scroll-margin-top:24px}
+
+h2.sec{
+  font-family:var(--serif);
+  font-size:27px;
+  font-weight:700;
+  letter-spacing:-.01em;
+  line-height:1.2;
+  margin:0 0 6px;
+  padding-bottom:12px;
+  border-bottom:2px solid var(--ink);
+}
+.sec-note{
+  color:var(--muted);
+  font-size:14.5px;
+  margin:0 0 26px;
+  max-width:70ch;
+}
+h3{
+  font-family:var(--serif);
+  font-size:19px;
+  font-weight:600;
+  margin:34px 0 10px;
+  letter-spacing:-.005em;
+}
+p{max-width:76ch}
+main a{color:var(--accent)}
+strong{font-weight:600}
+code{
+  font-family:var(--mono);
+  font-size:.88em;
+  background:#DDE4EB;
+  padding:1px 5px;
+  border-radius:2px;
+  color:#243545;
+}
+
+/* ---------- area cards: the signature spine ---------- */
+.area{
+  background:var(--surface);
+  border:1px solid var(--line-soft);
+  border-left:5px solid var(--c);
+  padding:26px 30px 28px;
+  margin-bottom:22px;
+  scroll-margin-top:24px;
+}
+.area[data-a="ref"]{--c:var(--ref)}
+.area[data-a="sales"]{--c:var(--sales)}
+.area[data-a="ops"]{--c:var(--ops)}
+.area[data-a="risk"]{--c:var(--risk)}
+.area[data-a="sup"]{--c:var(--sup)}
+
+.area-head{
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-bottom:4px;
+}
+.area-num{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--c);
+  font-weight:600;
+  letter-spacing:.06em;
+}
+.area h3{
+  font-size:22px;
+  margin:0;
+  font-family:var(--serif);
+  font-weight:700;
+}
+.area-tag{
+  font-family:var(--mono);
+  font-size:10.5px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--c);
+  border:1px solid currentColor;
+  padding:2px 7px;
+  border-radius:2px;
+  white-space:nowrap;
+}
+.area h4{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--muted);
+  font-weight:500;
+  margin:24px 0 9px;
+}
+.area p:first-of-type{margin-top:14px}
+
+ul.tight{margin:0;padding-left:19px}
+ul.tight li{margin-bottom:4px}
+
+.entities{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 0}
+.entities span{
+  font-family:var(--mono);
+  font-size:12px;
+  background:#EDF1F5;
+  border:1px solid var(--line-soft);
+  padding:2px 8px;
+  border-radius:2px;
+  color:var(--ink-2);
+}
+.bian{
+  font-family:var(--mono);
+  font-size:12.5px;
+  color:var(--ink-2);
+  line-height:1.9;
+  background:#F4F7F9;
+  border:1px dashed var(--line);
+  padding:10px 13px;
+}
+.bian b{color:var(--c);font-weight:600}
+
+/* callouts */
+.note{
+  border-left:3px solid var(--line);
+  padding:2px 0 2px 16px;
+  margin:18px 0;
+  color:var(--ink-2);
+}
+.note.rural{
+  border-left-color:#4E7B2A;
+  background:linear-gradient(90deg,rgba(78,123,42,.05),transparent 70%);
+  padding:12px 16px;
+}
+.note.warn{
+  border-left-color:var(--risk);
+  background:linear-gradient(90deg,rgba(178,69,44,.05),transparent 70%);
+  padding:12px 16px;
+}
+.note-label{
+  display:block;
+  font-family:var(--mono);
+  font-size:10.5px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  margin-bottom:5px;
+  font-weight:600;
+}
+.note.rural .note-label{color:#4E7B2A}
+.note.warn .note-label{color:var(--risk)}
+.note p{margin:0}
+.note p + p{margin-top:9px}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:18px 0;background:var(--surface);border:1px solid var(--line-soft)}
+table{border-collapse:collapse;width:100%;font-size:14.2px;min-width:520px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{
+  background:#F2F5F8;
+  font-family:var(--mono);
+  font-size:10.5px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--muted);
+  font-weight:600;
+  border-bottom:1px solid var(--line);
+  white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#F7F9FB}
+td .n{font-family:var(--mono);color:var(--muted);font-size:12.5px}
+td .ba{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.04em;
+  padding:1px 7px;
+  border-radius:2px;
+  white-space:nowrap;
+  color:#fff;
+}
+.ba[data-a="ref"]{background:var(--ref)}
+.ba[data-a="sales"]{background:var(--sales)}
+.ba[data-a="ops"]{background:var(--ops)}
+.ba[data-a="risk"]{background:var(--risk)}
+.ba[data-a="sup"]{background:var(--sup)}
+.ba[data-a="mix"]{background:linear-gradient(90deg,var(--ops) 50%,var(--risk) 50%)}
+.dep{text-align:center;font-size:15px;font-family:var(--mono)}
+.dep.strong{color:var(--risk);font-weight:700}
+.dep.soft{color:var(--muted)}
+
+/* ---------- the sequence chains ---------- */
+.flow{
+  background:var(--surface);
+  border:1px solid var(--line-soft);
+  padding:24px 26px 26px;
+  margin:20px 0 26px;
+}
+.flow > h4{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin:0 0 18px;
+  font-weight:500;
+}
+ol.chain{list-style:none;margin:0;padding:0}
+ol.chain li{
+  position:relative;
+  padding:0 0 16px 30px;
+  font-size:14.6px;
+  line-height:1.45;
+}
+ol.chain li::before{ /* node */
+  content:"";
+  position:absolute;
+  left:0;top:5px;
+  width:11px;height:11px;
+  border-radius:50%;
+  background:var(--c,var(--ext));
+  box-shadow:0 0 0 3px var(--surface);
+  z-index:1;
+}
+ol.chain li::after{ /* connector */
+  content:"";
+  position:absolute;
+  left:5px;top:12px;
+  width:1px;height:calc(100% - 6px);
+  background:var(--line);
+}
+ol.chain li:last-child{padding-bottom:0}
+ol.chain li:last-child::after{display:none}
+ol.chain li[data-a="ref"]{--c:var(--ref)}
+ol.chain li[data-a="sales"]{--c:var(--sales)}
+ol.chain li[data-a="ops"]{--c:var(--ops)}
+ol.chain li[data-a="risk"]{--c:var(--risk)}
+ol.chain li[data-a="sup"]{--c:var(--sup)}
+ol.chain li[data-a="ext"]{--c:var(--ext)}
+ol.chain b{font-weight:600}
+ol.chain .what{color:var(--muted);font-size:13.6px}
+ol.chain li.gate{font-family:var(--mono);font-size:13px;color:var(--ink-2)}
+ol.chain li.branch-head::after{display:none}
+
+.branches{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:4px}
+.branch{
+  border-top:2px solid var(--line);
+  padding:14px 16px 4px;
+  border-left:1px solid var(--line-soft);
+}
+.branch:first-child{border-left:none}
+.branch-label{
+  font-family:var(--mono);
+  font-size:10.5px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  margin-bottom:10px;
+  font-weight:600;
+}
+.branch.good .branch-label{color:var(--sales)}
+.branch.bad .branch-label{color:var(--risk)}
+.branch ol.chain li{font-size:13.8px;padding-bottom:13px}
+
+.insert{
+  margin-top:14px;
+  border:1px dashed #7FA05C;
+  background:rgba(78,123,42,.04);
+  padding:16px 20px 18px;
+}
+.insert .branch-label{color:#41681F}
+
+/* ---------- misc blocks ---------- */
+.principles{display:grid;gap:14px;margin-top:8px}
+.principle{
+  background:var(--surface);
+  border:1px solid var(--line-soft);
+  padding:18px 22px;
+}
+.principle h4{
+  margin:0 0 6px;
+  font-family:var(--serif);
+  font-size:17px;
+  font-weight:600;
+}
+.principle p{margin:0;color:var(--ink-2);font-size:14.8px}
+
+.layers{margin:18px 0 26px;border:1px solid var(--line-soft);background:var(--surface)}
+.layer{display:grid;grid-template-columns:190px 1fr;gap:0;border-bottom:1px solid var(--line-soft)}
+.layer:last-child{border-bottom:none}
+.layer dt{
+  padding:16px 18px;
+  background:#F2F5F8;
+  font-family:var(--mono);
+  font-size:12.5px;
+  font-weight:600;
+  letter-spacing:.02em;
+  border-right:1px solid var(--line-soft);
+}
+.layer dd{margin:0;padding:16px 20px;font-size:14.6px}
+.layer dd em{color:var(--muted);font-style:normal;display:block;margin-top:5px;font-size:13.6px}
+
+footer{
+  border-top:1px solid var(--line);
+  margin-top:20px;
+  padding-top:22px;
+  color:var(--muted);
+  font-size:13.5px;
+  max-width:80ch;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width:960px){
+  .shell{grid-template-columns:1fr;gap:0;padding:0 20px 70px}
+  .toc{
+    position:static;
+    max-height:none;
+    padding:22px 0 8px;
+    border-bottom:1px solid var(--line);
+    columns:2;
+    column-gap:20px;
+  }
+  .toc h2{column-span:all}
+  .toc a{break-inside:avoid}
+  .masthead-inner{padding:34px 20px 28px}
+  .area{padding:22px 20px 24px}
+  .branches{grid-template-columns:1fr}
+  .branch:first-child{border-left:1px solid var(--line-soft)}
+  .layer{grid-template-columns:1fr}
+  .layer dt{border-right:none;border-bottom:1px solid var(--line-soft)}
+  .flow{padding:20px 18px}
+}
+@media print{
+  .toc{display:none}
+  .shell{grid-template-columns:1fr}
+  body{background:#fff}
+  .area,.flow,.tw{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <p class="kicker">Referência de arquitetura · Vocabulário de mercado brasileiro × BIAN Service Landscape 14.0</p>
+    <h1>Mapa de áreas, processos e domínios de um banco brasileiro</h1>
+    <p class="lede">Vinte e duas áreas, o que cada uma faz, quais entidades você modelaria, de quem depende — e as sequências que atravessam todas elas. Exemplos ancorados em crédito rural.</p>
+    <div class="legend">
+      <span class="legend-label">Business areas do BIAN — a cor acompanha cada área e cada passo dos fluxos</span>
+      <span class="chip" data-a="ref">Reference Data</span>
+      <span class="chip" data-a="sales">Sales &amp; Service</span>
+      <span class="chip" data-a="ops">Operations &amp; Execution</span>
+      <span class="chip" data-a="risk">Risk &amp; Compliance</span>
+      <span class="chip" data-a="sup">Business Support</span>
+      <span class="chip" data-a="ext">Infraestrutura externa</span>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+
+<nav class="toc" aria-label="Sumário">
+  <h2>Sumário</h2>
+  <a href="#leitura">Como ler</a>
+  <a href="#mapa">Mapa mestre — 22 áreas</a>
+  <div class="toc-gap"></div>
+  <h2>Detalhamento</h2>
+  <a class="sub" data-a="ref" href="#a-cadastro">Cadastro</a>
+  <a class="sub" data-a="ref" href="#a-produtos">Produtos</a>
+  <a class="sub" data-a="sales" href="#a-canais">Canais e Atendimento</a>
+  <a class="sub" data-a="ops" href="#a-credito">Crédito</a>
+  <a class="sub" data-a="ops" href="#a-garantias">Garantias e Colaterais</a>
+  <a class="sub" data-a="ops" href="#a-depositos">Depósitos e Captação</a>
+  <a class="sub" data-a="ops" href="#a-pagamentos">Pagamentos</a>
+  <a class="sub" data-a="risk" href="#a-tesouraria">Tesouraria</a>
+  <a class="sub" data-a="ops" href="#a-mesa">Mesa de Operações</a>
+  <a class="sub" data-a="ops" href="#a-cambio">Câmbio</a>
+  <a class="sub" data-a="ops" href="#a-custodia">Custódia e Liquidação</a>
+  <a class="sub" data-a="ops" href="#a-investimentos">Investimentos e Asset</a>
+  <a class="sub" data-a="risk" href="#a-riscos">Riscos</a>
+  <a class="sub" data-a="risk" href="#a-compliance">Compliance e PLD/FT</a>
+  <a class="sub" data-a="sup" href="#a-contabil">Controladoria e Contábil</a>
+  <div class="toc-gap"></div>
+  <a href="#relacoes">Relacionamentos</a>
+  <a href="#sequencias">Sequências end-to-end</a>
+  <a href="#arquitetura">Implicações de arquitetura</a>
+  <a href="#glossario">Glossário</a>
+</nav>
+
+<main>
+
+<!-- ============ 0 ============ -->
+<section id="leitura">
+  <h2 class="sec">Como ler este documento</h2>
+  <p class="sec-note">Três camadas que costumam ser confundidas — e a razão de separá-las.</p>
+
+  <dl class="layers">
+    <div class="layer">
+      <dt>Área organizacional</dt>
+      <dd>Como o banco brasileiro se organiza no organograma. Vocabulário do dia a dia.
+        <em>"Tesouraria", "Mesa de Câmbio", "Área Cadastral"</em></dd>
+    </div>
+    <div class="layer">
+      <dt>Processo de negócio</dt>
+      <dd>Sequência de atividades com início, fim e entregável. Atravessa áreas.
+        <em>"Ciclo de vida da operação de crédito"</em></dd>
+    </div>
+    <div class="layer">
+      <dt>Domínio funcional</dt>
+      <dd>Unidade atômica de capacidade, com fronteira de dados e de serviço. É o nível que interessa para desenhar sistema.
+        <em>Service domains do BIAN: <code>Consumer Loan</code>, <code>Collateral Asset Administration</code></em></dd>
+    </div>
+  </dl>
+
+  <p><strong>Por que separar.</strong> O organograma muda a cada reestruturação; o domínio funcional não. Se você modelar o sistema pelo organograma, refatora a cada troca de diretor. É exatamente o problema que o BIAN resolve.</p>
+
+  <h3>Sobre a estrutura BIAN</h3>
+  <p>O Service Landscape organiza o banco em três níveis: <em>business area</em> → <em>business domain</em> → <em>service domain</em>. A versão corrente, 14.0, traz 322 service domains agrupados em cerca de 38 business domains e 5 business areas. É um framework de referência para organizar capacidades — não um blueprint de implementação. Nenhum banco real tem um sistema por service domain.</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Business area</th><th>O que reúne</th></tr></thead>
+      <tbody>
+        <tr><td><span class="ba" data-a="ref">Reference Data</span></td><td>O que o banco sabe: parte, produto, agências externas, dados de mercado</td></tr>
+        <tr><td><span class="ba" data-a="sales">Sales &amp; Service</span></td><td>Como o banco chega ao cliente: canais, marketing, venda, atendimento</td></tr>
+        <tr><td><span class="ba" data-a="ops">Operations &amp; Execution</span></td><td>O que o banco faz: originar, processar, liquidar, custodiar, cobrar</td></tr>
+        <tr><td><span class="ba" data-a="risk">Risk &amp; Compliance</span></td><td>O que o banco controla: risco, capital, tesouraria de balanço, regulatório</td></tr>
+        <tr><td><span class="ba" data-a="sup">Business Support</span></td><td>O que sustenta: finanças, RH, TI, jurídico, facilities</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <span class="note-label">Sobre a bibliografia</span>
+    <p>Não tenho acesso ao texto do Fortuna. O que uso aqui é o vocabulário consolidado do mercado brasileiro que a obra dele sistematiza — estrutura do SFN, produtos de captação e aplicação, mecânica do SPB, câmbio, derivativos. Para números, alíquotas e regras vigentes, confirme na fonte primária, porque isso muda todo ano.</p>
+  </div>
+</section>
+
+<!-- ============ 1 ============ -->
+<section id="mapa">
+  <h2 class="sec">Mapa mestre</h2>
+  <p class="sec-note">As 22 áreas, a função de cada uma em uma frase, e onde caem no landscape.</p>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th></th><th>Área</th><th>Função</th><th>Business area</th><th>Business domain</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="n">01</td><td><strong>Cadastro / Onboarding</strong></td><td>Estabelecer e manter a identidade e a qualificação da parte</td><td><span class="ba" data-a="ref">Reference Data</span></td><td>Party</td></tr>
+        <tr><td class="n">02</td><td><strong>Produtos</strong></td><td>Definir, precificar e versionar o que o banco vende</td><td><span class="ba" data-a="ref">Reference Data</span></td><td>Product Management</td></tr>
+        <tr><td class="n">03</td><td><strong>Canais e Atendimento</strong></td><td>Levar produto ao cliente e resolver demanda</td><td><span class="ba" data-a="sales">Sales &amp; Service</span></td><td>Channel Specific, Servicing</td></tr>
+        <tr><td class="n">04</td><td><strong>Comercial / Rede</strong></td><td>Prospectar, negociar, fechar</td><td><span class="ba" data-a="sales">Sales &amp; Service</span></td><td>Sales, Customer Management</td></tr>
+        <tr><td class="n">05</td><td><strong>Crédito</strong></td><td>Decidir se, quanto, a que preço e sob que garantia emprestar</td><td><span class="ba" data-a="mix">Ops + Risk</span></td><td>Loans &amp; Deposits, Credit Risk</td></tr>
+        <tr><td class="n">06</td><td><strong>Garantias / Colaterais</strong></td><td>Constituir, avaliar, monitorar e liberar o colateral</td><td><span class="ba" data-a="ops">Operations</span></td><td>Collateral Administration</td></tr>
+        <tr><td class="n">07</td><td><strong>Formalização</strong></td><td>Transformar decisão em instrumento juridicamente válido</td><td><span class="ba" data-a="ops">Operations</span></td><td>Product-specific Fulfillment</td></tr>
+        <tr><td class="n">08</td><td><strong>Depósitos e Conta</strong></td><td>Guardar recurso à vista e a prazo, movimentar saldo</td><td><span class="ba" data-a="ops">Operations</span></td><td>Loans &amp; Deposits, Account Mgmt</td></tr>
+        <tr><td class="n">09</td><td><strong>Pagamentos</strong></td><td>Mover dinheiro entre partes com finalidade e liquidação</td><td><span class="ba" data-a="ops">Operations</span></td><td>Payments</td></tr>
+        <tr><td class="n">10</td><td><strong>Cartões e Adquirência</strong></td><td>Emitir, autorizar, capturar, liquidar transação de cartão</td><td><span class="ba" data-a="ops">Operations</span></td><td>Cards</td></tr>
+        <tr><td class="n">11</td><td><strong>Tesouraria</strong></td><td>Casar prazo, moeda e indexador; gerir caixa e liquidez</td><td><span class="ba" data-a="risk">Risk</span></td><td>Bank Portfolio &amp; Treasury</td></tr>
+        <tr><td class="n">12</td><td><strong>Mesa de Operações</strong></td><td>Executar posição própria e de cliente em mercado</td><td><span class="ba" data-a="ops">Operations</span></td><td>Wholesale Trading, Market Ops</td></tr>
+        <tr><td class="n">13</td><td><strong>Câmbio</strong></td><td>Converter moeda com respaldo contratual e regulatório</td><td><span class="ba" data-a="ops">Operations</span></td><td>Trade Banking</td></tr>
+        <tr><td class="n">14</td><td><strong>Custódia e Liquidação</strong></td><td>Guardar ativo de terceiro, liquidar, processar evento, conciliar</td><td><span class="ba" data-a="ops">Operations</span></td><td>Market Operations, Securities</td></tr>
+        <tr><td class="n">15</td><td><strong>Investimentos / Asset</strong></td><td>Gerir e distribuir carteira e fundo</td><td><span class="ba" data-a="ops">Operations</span></td><td>Investment Management</td></tr>
+        <tr><td class="n">16</td><td><strong>Backoffice</strong></td><td>Processar em lote, conciliar, corrigir quebra</td><td><span class="ba" data-a="ops">Operations</span></td><td>Cross Product Operations</td></tr>
+        <tr><td class="n">17</td><td><strong>Cobrança e Recuperação</strong></td><td>Reaver crédito vencido, renegociar, executar garantia</td><td><span class="ba" data-a="ops">Operations</span></td><td>Collections, Recovery</td></tr>
+        <tr><td class="n">18</td><td><strong>Riscos</strong></td><td>Medir, limitar e capitalizar exposição</td><td><span class="ba" data-a="risk">Risk</span></td><td>Credit/Market/Op Risk, Models</td></tr>
+        <tr><td class="n">19</td><td><strong>Compliance e PLD/FT</strong></td><td>Garantir aderência normativa e detectar ilícito</td><td><span class="ba" data-a="risk">Risk</span></td><td>Regulations &amp; Compliance</td></tr>
+        <tr><td class="n">20</td><td><strong>Controladoria e Contábil</strong></td><td>Registrar, apurar resultado, fechar balanço, reportar</td><td><span class="ba" data-a="sup">Support</span></td><td>Finance</td></tr>
+        <tr><td class="n">21</td><td><strong>Jurídico, Auditoria, Ouvidoria</strong></td><td>Defender, verificar, atender reclamação</td><td><span class="ba" data-a="sup">Support</span></td><td>Enterprise Services, Corp. Relations</td></tr>
+        <tr><td class="n">22</td><td><strong>TI, Dados e Segurança</strong></td><td>Sustentar e evoluir a plataforma</td><td><span class="ba" data-a="sup">Support</span></td><td>IT Management, Systems Admin</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 2 ============ -->
+<section id="detalhe">
+  <h2 class="sec">Detalhamento por área</h2>
+  <p class="sec-note">Função, processos, entidades que você modelaria, dependências e service domains do BIAN.</p>
+
+  <!-- CADASTRO -->
+  <article class="area" data-a="ref" id="a-cadastro">
+    <div class="area-head">
+      <span class="area-num">01</span>
+      <h3>Cadastro / Área Cadastral</h3>
+      <span class="area-tag">Reference Data · Party</span>
+    </div>
+    <p><strong>Função.</strong> Ser a fonte única da verdade sobre <em>quem</em> é a contraparte. Não é "tela de cadastro" — é o domínio que responde: essa parte existe, é quem diz ser, está apta a contratar, e qual é a rede de relacionamentos dela.</p>
+
+    <h4>Processos</h4>
+    <ul class="tight">
+      <li>Identificação e verificação (KYC/KYB) — documento, biometria, prova de vida</li>
+      <li>Qualificação e enriquecimento — bureau, renda, faturamento, CNAE</li>
+      <li>Estrutura societária e beneficiário final (UBO) para PJ</li>
+      <li>Vínculos e grupo econômico — quem controla quem</li>
+      <li>Screening: PEP, sanções, listas restritivas</li>
+      <li>Atualização cadastral periódica e recadastramento</li>
+      <li>Consentimento e compartilhamento (LGPD, Open Finance)</li>
+    </ul>
+
+    <h4>Entidades de domínio</h4>
+    <div class="entities"><span>Parte</span><span>Documento de Identificação</span><span>Vínculo</span><span>Grupo Econômico</span><span>Beneficiário Final</span><span>Consentimento</span><span>Situação Cadastral</span></div>
+
+    <div class="note rural">
+      <span class="note-label">Exemplo — crédito rural</span>
+      <p>Aqui o cadastro é muito mais pesado que no varejo. Além da parte, é preciso qualificar o <strong>imóvel rural</strong> e a <strong>atividade</strong>: matrícula, CCIR, CAR, NIRF/ITR, área própria vs. arrendada, contrato de arrendamento, enquadramento, DAP/CAF, CND.</p>
+      <p>Modelar isso como "campos extras do cadastro PF" é o erro clássico. Imóvel rural é entidade própria, com ciclo de vida próprio, que se relaciona N:N com partes — condomínio, arrendamento, sucessão.</p>
+    </div>
+
+    <h4>Dependências</h4>
+    <p><strong>Depende de:</strong> External Agency (bureaus, Receita, cartórios, INCRA). <strong>Alimenta:</strong> absolutamente tudo — crédito, PLD, contabilidade, cobrança, regulatório.</p>
+
+    <h4>Service domains</h4>
+    <p class="bian"><b>Customer Reference Data Management</b> · <b>Party Lifecycle Management</b> · <b>Customer Relationship Management</b> · <b>Party Authentication</b> · <b>Customer Behavior Insights</b></p>
+  </article>
+
+  <!-- PRODUTOS -->
+  <article class="area" data-a="ref" id="a-produtos">
+    <div class="area-head">
+      <span class="area-num">02</span>
+      <h3>Produtos / Engenharia de Produtos</h3>
+      <span class="area-tag">Reference Data · Product Mgmt</span>
+    </div>
+    <p><strong>Função.</strong> Definir o que existe para ser vendido, com quais parâmetros, para quem, a que preço, sob qual regra. É o domínio que separa <strong>catálogo</strong> (o que pode existir) de <strong>instância</strong> (o que o cliente contratou).</p>
+
+    <h4>Processos</h4>
+    <ul class="tight">
+      <li>Desenho e homologação de produto (comitê de produtos)</li>
+      <li>Definição de elegibilidade e público-alvo</li>
+      <li>Tabela de preços, taxas, tarifas, encargos</li>
+      <li>Combinações permitidas e vedações</li>
+      <li>Versionamento e vigência</li>
+      <li>Descontinuação e migração de base</li>
+    </ul>
+
+    <h4>Entidades de domínio</h4>
+    <div class="entities"><span>Produto</span><span>Versão de Produto</span><span>Regra de Elegibilidade</span><span>Tabela de Encargos</span><span>Vigência</span></div>
+
+    <div class="note rural">
+      <span class="note-label">Exemplo — crédito rural</span>
+      <p>Cada linha do Plano Safra é uma versão de produto com vigência de ano-safra: fonte de recurso (equalizável, controlado não equalizável, livre), teto de encargo, limite por CPF/CNPJ, finalidade permitida, prazo, carência.</p>
+      <p>Quando "acaba o equalizável", o que muda não é o produto — é a <strong>fonte</strong> e, por consequência, o encargo. Se o modelo não separa produto de fonte de funding, você não consegue representar a mesma linha contratada em fontes diferentes ao longo da safra.</p>
+    </div>
+
+    <h4>Dependências</h4>
+    <p><strong>Depende de:</strong> Risco (apetite), Tesouraria (custo), Jurídico e Compliance (legalidade). <strong>Alimenta:</strong> Canais, Crédito, Contratos, Precificação.</p>
+
+    <h4>Service domains</h4>
+    <p class="bian"><b>Product Design</b> · <b>Product Directory</b> · <b>Product Deployment</b> · <b>Product Combination</b> · <b>Product Expert Sales Support</b></p>
+  </article>
+
+  <!-- CANAIS -->
+  <article class="area" data-a="sales" id="a-canais">
+    <div class="area-head">
+      <span class="area-num">03</span>
+      <h3>Canais e Atendimento</h3>
+      <span class="area-tag">Sales &amp; Service</span>
+    </div>
+    <p><strong>Função.</strong> Ser a superfície de contato: agência, app, internet banking, contact center, WhatsApp, gerente, correspondente bancário, API de Open Finance.</p>
+
+    <h4>Processos</h4>
+    <ul class="tight">
+      <li>Autenticação e sessão</li>
+      <li>Jornada de contratação e autoatendimento</li>
+      <li>Atendimento assistido e transbordo</li>
+      <li>Registro de manifestação (SAC → Ouvidoria)</li>
+      <li>Notificação e comunicação ativa</li>
+    </ul>
+
+    <h4>Entidades de domínio</h4>
+    <div class="entities"><span>Canal</span><span>Sessão</span><span>Interação</span><span>Manifestação</span><span>Preferência de Contato</span></div>
+
+    <div class="note warn">
+      <span class="note-label">Regra de arquitetura</span>
+      <p>Canal <strong>não decide nada</strong>. Canal coleta, apresenta e confirma. Decisão de crédito, precificação e validação de elegibilidade vivem no domínio de negócio. Quando regra vaza para o canal, você acaba com o app aprovando o que a agência recusa.</p>
+    </div>
+
+    <div class="note rural">
+      <span class="note-label">Exemplo — crédito rural</span>
+      <p>Um mesmo pedido de custeio pode entrar por app, por gerente agro na agência, ou por correspondente/revenda de insumo. O contrato precisa ser idêntico em qualquer trilho — caso clássico de motor de originação único com fachadas de canal.</p>
+    </div>
+
+    <h4>Service domains</h4>
+    <p class="bian"><b>Branch Location Management</b> · <b>Contact Center Operations</b> · <b>E-Branch Operations</b> · <b>Servicing Issue</b> · <b>Customer Case Management</b></p>
+  </article>
+
+  <!-- CREDITO -->
+  <article class="area" data-a="ops" id="a-credito">
+    <div class="area-head">
+      <span class="area-num">05</span>
+      <h3>Crédito</h3>
+      <span class="area-tag">Operations + Risk</span>
+    </div>
+    <p><strong>Função.</strong> Decidir se empresta, quanto, por quanto tempo, a que preço e contra qual garantia — e acompanhar até a quitação ou a baixa.</p>
+
+    <h4>Subáreas típicas</h4>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Subárea</th><th>Função</th></tr></thead>
+        <tbody>
+          <tr><td>Política de Crédito</td><td>Escreve as regras: apetite, vedação, alçada</td></tr>
+          <tr><td>Modelos / Credit Scoring</td><td>Constrói e monitora modelo de rating e score</td></tr>
+          <tr><td>Mesa de Crédito / Análise</td><td>Analisa caso a caso o que o motor não decide</td></tr>
+          <tr><td>Alçadas e Comitê</td><td>Aprova acima do limite automático</td></tr>
+          <tr><td>Formalização</td><td>Gera e coleta assinatura do instrumento</td></tr>
+          <tr><td>Liberação / Desembolso</td><td>Efetiva o crédito na conta</td></tr>
+          <tr><td>Manutenção de Carteira</td><td>Aditamento, prorrogação, liquidação antecipada</td></tr>
+          <tr><td>Monitoramento</td><td>Acompanha comportamento e sinal de deterioração</td></tr>
+          <tr><td>Cobrança e Recuperação</td><td>Atua no vencido</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Entidades de domínio</h4>
+    <div class="entities"><span>Proposta</span><span>Limite</span><span>Rating</span><span>Decisão</span><span>Contrato</span><span>Operação</span><span>Parcela</span><span>Garantia</span><span>Evento de Contrato</span><span>Provisão</span></div>
+
+    <div class="note rural">
+      <span class="note-label">Exemplo — crédito rural</span>
+      <p>O ciclo ganha etapas específicas: verificação de <strong>ZARC</strong>, enquadramento de <strong>fonte de recurso</strong>, orçamento e projeto técnico assinado por profissional habilitado, aderência ao <strong>MCR</strong>, registro no <strong>SICOR</strong>, vinculação a seguro (Proagro/PSR) e, a partir de 2026, fiscalização por sensoriamento remoto para áreas acima do limite normativo.</p>
+      <p>E há uma peculiaridade jurídica relevante: prorrogação por frustração de safra comprovada não é liberalidade do banco, é direito do produtor (Súmula 298 STJ). Prorrogação não pode ser um flag de renegociação comercial — é evento de contrato com regra própria e trilha de auditoria própria.</p>
+    </div>
+
+    <h4>Dependências</h4>
+    <p><strong>Depende de:</strong> Cadastro, Risco, Produtos, Tesouraria, External Agency (SCR, bureaus). <strong>Alimenta:</strong> Contabilidade, Risco, Regulatório (SCR), Cobrança, Garantias.</p>
+
+    <h4>Service domains</h4>
+    <p class="bian"><b>Consumer Loan</b> · <b>Corporate Loan</b> · <b>Credit Facility</b> · <b>Credit Management</b> · <b>Customer Credit Rating</b> · <b>Loan Origination</b> · <b>Credit Risk Models</b> · <b>Delinquent Account Handling</b> · <b>Collections</b> · <b>Loan Recovery</b></p>
+  </article>
+
+  <!-- GARANTIAS -->
+  <article class="area" data-a="ops" id="a-garantias">
+    <div class="area-head">
+      <span class="area-num">06</span>
+      <h3>Garantias e Colaterais</h3>
+      <span class="area-tag">Collateral Administration</span>
+    </div>
+    <p><strong>Função.</strong> Constituir juridicamente, avaliar economicamente e monitorar continuamente o que respalda a operação.</p>
+
+    <h4>Processos</h4>
+    <ul class="tight">
+      <li>Identificação e aceitação do bem</li>
+      <li>Avaliação e reavaliação periódica</li>
+      <li>Constituição: registro, averbação, alienação fiduciária, penhor, hipoteca, cessão fiduciária</li>
+      <li>Controle de suficiência (LTV) e de sobreposição</li>
+      <li>Compartilhamento entre operações</li>
+      <li>Liberação de gravame na quitação</li>
+      <li>Execução em caso de inadimplência</li>
+    </ul>
+
+    <h4>Entidades de domínio</h4>
+    <div class="entities"><span>Bem</span><span>Avaliação</span><span>Gravame</span><span>Vínculo Garantia-Operação</span><span>Grau de Preferência</span></div>
+
+    <div class="note warn">
+      <span class="note-label">Armadilha de modelagem</span>
+      <p>A relação garantia↔operação é N:N, com grau de preferência e percentual de vinculação. Modelar como 1:1 quebra no primeiro cliente que dá a mesma fazenda em garantia de custeio e de investimento.</p>
+    </div>
+
+    <div class="note rural">
+      <span class="note-label">Exemplo — crédito rural</span>
+      <p>Penhor agrícola sobre a lavoura em formação, penhor mercantil sobre a safra colhida, alienação fiduciária do trator financiado, hipoteca da matrícula, CPR vinculada. O controle de <strong>não sobreposição</strong> é crítico: a mesma safra dada em garantia ao banco e vendida antecipadamente via CPR a uma trading é o risco central. Por isso o registro em entidade registradora importa tanto — é o que dá eficácia contra terceiros.</p>
+    </div>
+
+    <h4>Service domains</h4>
+    <p class="bian"><b>Collateral Asset Administration</b> · <b>Collateral Allocation Management</b> · <b>Property/Asset Valuation</b></p>
+  </article>
+
+  <!-- DEPOSITOS -->
+  <article class="area" data-a="ops" id="a-depositos">
+    <div class="area-head">
+      <span class="area-num">08</span>
+      <h3>Depósitos, Conta Corrente e Captação</h3>
+      <span class="area-tag">Loans &amp; Deposits</span>
+    </div>
+    <p><strong>Função.</strong> Custodiar recurso do cliente e ser a conta de trânsito de tudo.</p>
+
+    <h4>Processos</h4>
+    <ul class="tight">
+      <li>Abertura, manutenção, encerramento de conta</li>
+      <li>Lançamento, saldo, extrato, bloqueio judicial (SISBAJUD)</li>
+      <li>Limite de cheque especial</li>
+      <li>Captação a prazo: CDB, RDB, LCI, LCA, LF, compromissadas</li>
+      <li>Poupança (regra de aniversário)</li>
+      <li>Tarifação e pacote de serviços</li>
+    </ul>
+
+    <h4>Entidades de domínio</h4>
+    <div class="entities"><span>Conta</span><span>Lançamento</span><span>Saldo</span><span>Bloqueio</span><span>Título de Captação</span><span>Remuneração</span></div>
+
+    <h4>Relação com Tesouraria</h4>
+    <p>Todo depósito é <strong>funding</strong>. Conta corrente é passivo de curtíssimo prazo e custo baixo; CDB é passivo de prazo definido e custo indexado. A Tesouraria compra esse funding da rede via <strong>preço de transferência (TFP)</strong> e revende para as áreas de crédito. É o mecanismo que faz cada área ter margem própria sem que ninguém "seja dono" do caixa.</p>
+
+    <div class="note rural">
+      <span class="note-label">Exemplo — crédito rural</span>
+      <p>A LCA é o elo direto: o banco capta com isenção de IR para o investidor e, em contrapartida, o recurso fica direcionado ao agronegócio, com lastro identificado em operações da carteira. O sistema precisa manter a vinculação lastro↔emissão viva ao longo do tempo — se a operação-lastro é quitada antecipadamente, é preciso substituir o lastro.</p>
+    </div>
+
+    <h4>Service domains</h4>
+    <p class="bian"><b>Current Account</b> · <b>Savings Account</b> · <b>Term Deposit</b> · <b>Deposit Account</b> · <b>Financial Statement</b></p>
+  </article>
+
+  <!-- PAGAMENTOS -->
+  <article class="area" data-a="ops" id="a-pagamentos">
+    <div class="area-head">
+      <span class="area-num">09</span>
+      <h3>Pagamentos</h3>
+      <span class="area-tag">Payments</span>
+    </div>
+    <p><strong>Função.</strong> Mover valor entre partes, com finalidade definida, garantindo liquidação e irrevocabilidade.</p>
+
+    <h4>Processos</h4>
+    <ul class="tight">
+      <li>Iniciação (com ou sem consentimento de terceiro — Open Finance)</li>
+      <li>Validação, antifraude e limites</li>
+      <li>Roteamento por trilho</li>
+      <li>Compensação e liquidação</li>
+      <li>Confirmação, devolução, estorno, contestação</li>
+    </ul>
+
+    <h4>Trilhos brasileiros</h4>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Trilho</th><th>Uso</th><th>Liquidação</th></tr></thead>
+        <tbody>
+          <tr><td><strong>STR</strong></td><td>TED e liquidação interbancária</td><td>Bruta em tempo real, em reservas no BCB</td></tr>
+          <tr><td><strong>SPI (Pix)</strong></td><td>Transferência instantânea 24×7</td><td>Bruta em tempo real, conta PI no BCB</td></tr>
+          <tr><td><strong>SLC / Nuclea</strong></td><td>Boleto, cheque, DOC histórico</td><td>Líquida diferida</td></tr>
+          <tr><td><strong>Interno (on-us)</strong></td><td>Conta a conta no mesmo banco</td><td>Imediata, sem infra externa</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Entidades de domínio</h4>
+    <div class="entities"><span>Ordem de Pagamento</span><span>Instrução</span><span>Trilho</span><span>Liquidação</span><span>Devolução</span><span>Chave Pix</span><span>Consentimento</span></div>
+
+    <div class="note rural">
+      <span class="note-label">Exemplo — crédito rural</span>
+      <p>O desembolso do custeio raramente cai na conta livre do produtor. Costuma ir por <strong>pagamento direto ao fornecedor de insumo</strong> contra nota fiscal, justamente para comprovar aplicação dos recursos na finalidade — exigência do MCR. O pagamento carrega vínculo com o contrato de crédito e com o documento fiscal: não é só transferir, é evidência de comprovação de aplicação.</p>
+    </div>
+
+    <h4>Service domains</h4>
+    <p class="bian"><b>Payment Order</b> · <b>Payment Execution</b> · <b>Payment Initiation</b> · <b>Clearing &amp; Settlement</b> · <b>Direct Debit</b> · <b>Correspondent Bank Operations</b></p>
+  </article>
+
+  <!-- TESOURARIA -->
+  <article class="area" data-a="risk" id="a-tesouraria">
+    <div class="area-head">
+      <span class="area-num">11</span>
+      <h3>Tesouraria</h3>
+      <span class="area-tag">Bank Portfolio &amp; Treasury</span>
+    </div>
+    <p><strong>Função.</strong> Duas coisas distintas que costumam ser confundidas:</p>
+    <ol class="tight" style="padding-left:20px;margin:10px 0 0">
+      <li><strong>Tesouraria de balanço (ALM)</strong> — casar prazo, moeda e indexador entre ativo e passivo; gerir liquidez e caixa; definir preço de transferência interno. É gestão, não negociação.</li>
+      <li><strong>Tesouraria de mercado / mesa proprietária</strong> — tomar posição direcional dentro do apetite de risco. É negociação.</li>
+    </ol>
+
+    <h4>Processos</h4>
+    <ul class="tight">
+      <li>Projeção de fluxo de caixa e necessidade de reserva</li>
+      <li>Gestão do compulsório e da conta Reservas Bancárias</li>
+      <li>Gap de liquidez, gap de repricing, descasamento cambial</li>
+      <li>Captação institucional (compromissadas, LF, emissão externa)</li>
+      <li>Preço de transferência (TFP)</li>
+      <li>Hedge da carteira própria e aplicação em títulos</li>
+    </ul>
+
+    <h4>Entidades de domínio</h4>
+    <div class="entities"><span>Posição</span><span>Gap</span><span>Curva</span><span>Limite</span><span>Preço de Transferência</span><span>Instrumento</span><span>Carteira</span></div>
+
+    <h4>Relação com todo o resto</h4>
+    <p>A Tesouraria é o <strong>contraparte interno</strong> de todas as áreas comerciais. Crédito compra funding dela; Depósitos vende funding para ela; Câmbio zera posição com ela. Se uma área comercial fizesse hedge por conta própria, o banco teria posição duplicada e risco não consolidado.</p>
+
+    <div class="note rural">
+      <span class="note-label">Exemplo — crédito rural</span>
+      <p>O descasamento aqui é estrutural e brutal: o ativo é uma operação de custeio de 8 a 12 meses com taxa <strong>prefixada</strong> definida pelo Plano Safra; o passivo é poupança rural e LCA, com custo indexado a TR ou a percentual do CDI. Alguém carrega esse risco de taxa — e é a Tesouraria, via hedge em DI futuro.</p>
+      <p>Nas linhas equalizáveis há uma terceira ponta: o Tesouro Nacional paga a diferença, mas com defasagem. Isso vira uma conta a receber do Tesouro, com risco de crédito soberano e risco de dotação orçamentária. É um ativo que precisa existir explicitamente no modelo — não é "ajuste de receita".</p>
+    </div>
+
+    <h4>Service domains</h4>
+    <p class="bian"><b>Treasury</b> · <b>Asset &amp; Liability Management</b> · <b>Bank Portfolio Analysis</b> · <b>Position Management</b> · <b>Liquidity Risk</b> · <b>Interest Rate Risk</b> · <b>Financial Instrument Valuation</b></p>
+  </article>
+
+  <!-- MESA -->
+  <article class="area" data-a="ops" id="a-mesa">
+    <div class="area-head">
+      <span class="area-num">12</span>
+      <h3>Mesa de Operações / Distribuição</h3>
+      <span class="area-tag">Wholesale Trading</span>
+    </div>
+    <p><strong>Função.</strong> Executar ordem — própria ou de cliente — em mercado organizado ou balcão.</p>
+
+    <h4>Processos</h4>
+    <ul class="tight">
+      <li>Recebimento e validação de ordem</li>
+      <li>Precificação e cotação</li>
+      <li>Execução (bolsa, balcão, internalização)</li>
+      <li>Confirmação e alocação</li>
+      <li>Encaminhamento para liquidação</li>
+      <li>Registro em câmara ou registradora</li>
+    </ul>
+
+    <h4>Entidades de domínio</h4>
+    <div class="entities"><span>Ordem</span><span>Execução</span><span>Negócio</span><span>Alocação</span><span>Book</span><span>Cotação</span></div>
+
+    <div class="note warn">
+      <span class="note-label">Sequência crítica</span>
+      <p>Ordem → execução → confirmação → alocação → liquidação → custódia. Cada seta é uma fronteira de domínio, e cada uma tem estado próprio. Colapsar isso em "status da ordem" é a origem de metade dos problemas de conciliação de mesa.</p>
+    </div>
+
+    <h4>Service domains</h4>
+    <p class="bian"><b>Trade Order</b> · <b>Trade Execution</b> · <b>Securities Position Management</b> · <b>Market Making</b> · <b>Trade Confirmation Matching</b></p>
+  </article>
+
+  <!-- CAMBIO -->
+  <article class="area" data-a="ops" id="a-cambio">
+    <div class="area-head">
+      <span class="area-num">13</span>
+      <h3>Câmbio</h3>
+      <span class="area-tag">Trade Banking</span>
+    </div>
+    <p><strong>Função.</strong> Converter moeda com respaldo contratual, cumprindo regime cambial e informando o regulador.</p>
+
+    <h4>Processos</h4>
+    <ul class="tight">
+      <li>Cotação e formação de spread</li>
+      <li>Contratação (contrato de câmbio, com natureza da operação)</li>
+      <li>Registro regulatório e enquadramento de natureza</li>
+      <li>Verificação documental — fundamento econômico da operação</li>
+      <li>Liquidação (pronta, futura, D0/D2)</li>
+      <li>Posição cambial consolidada da instituição</li>
+      <li>ACC/ACE e demais linhas de trade finance</li>
+    </ul>
+
+    <h4>Entidades de domínio</h4>
+    <div class="entities"><span>Contrato de Câmbio</span><span>Natureza da Operação</span><span>Moeda</span><span>Taxa</span><span>Posição Cambial</span><span>Liquidação</span></div>
+
+    <h4>Relacionamento</h4>
+    <p>Câmbio origina posição em moeda estrangeira → Tesouraria consolida e zera → Risco mede exposição → Contabilidade converte e reconhece variação → Regulatório reporta.</p>
+
+    <div class="note rural">
+      <span class="note-label">Exemplo — agro</span>
+      <p>É a ligação natural com o crédito rural: o produtor de soja vende em dólar e o exportador financia via ACC. Um mesmo grupo econômico pode ter custeio em reais no banco, hedge cambial na mesa e ACC na área de câmbio. O consolidado de exposição desse grupo só existe se <strong>grupo econômico</strong> for entidade de primeira classe no cadastro — e não uma agregação feita no BI.</p>
+    </div>
+
+    <h4>Service domains</h4>
+    <p class="bian"><b>Foreign Exchange</b> · <b>Currency Exchange</b> · <b>Trade Finance</b> · <b>Letter of Credit</b> · <b>Documentary Collection</b></p>
+  </article>
+
+  <!-- CUSTODIA -->
+  <article class="area" data-a="ops" id="a-custodia">
+    <div class="area-head">
+      <span class="area-num">14</span>
+      <h3>Custódia, Liquidação e Controladoria de Ativos</h3>
+      <span class="area-tag">Market Operations</span>
+    </div>
+    <p><strong>Função.</strong> Guardar ativo de terceiro na condição de fiel depositário, liquidar, processar evento e garantir que a posição interna espelhe a depositária central.</p>
+
+    <h4>Processos</h4>
+    <ul class="tight">
+      <li>Abertura e manutenção de conta de custódia</li>
+      <li>Liquidação por entrega contra pagamento (DvP)</li>
+      <li>Processamento de eventos: juros, amortização, vencimento, resgate, incorporação</li>
+      <li>Conciliação com depositária central</li>
+      <li>Controle de gravame e bloqueio</li>
+      <li>Marcação a mercado e valorização</li>
+      <li>Extrato, informe de rendimentos, retenção de IR/IOF</li>
+      <li>Custódia qualificada: verificação de lastro</li>
+    </ul>
+
+    <h4>A distinção que confunde muita gente</h4>
+    <div class="tw">
+      <table>
+        <thead><tr><th>Papel</th><th>A serviço de</th><th>Responsabilidade</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Depositária central</strong><br><span class="n">Selic, B3</span></td><td>O mercado</td><td>Registro-mãe do ativo; é a verdade</td></tr>
+          <tr><td><strong>Escriturador</strong></td><td>O emissor</td><td>Livro de titulares de uma emissão</td></tr>
+          <tr><td><strong>Custodiante</strong></td><td>O titular / investidor</td><td>Guarda, liquida, processa evento, espelha a depositária</td></tr>
+          <tr><td><strong>Controladoria de ativos</strong></td><td>O gestor / fundo</td><td>Calcula cota, valoriza carteira, apura enquadramento</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note rural">
+      <span class="note-label">Exemplo — agro</span>
+      <p>CRA e FIAGRO exigem custódia qualificada: o custodiante verifica, por amostragem, a documentação que lastreia os direitos creditórios do agronegócio, e responde por essa verificação. Não é guarda passiva — é atestação.</p>
+      <p>Do outro lado, a LCA emitida pelo banco fica registrada na B3 e custodiada para o investidor final, enquanto o lastro é controlado internamente. São dois controles distintos que precisam bater.</p>
+    </div>
+
+    <h4>Service domains</h4>
+    <p class="bian"><b>Custody Administration</b> · <b>Corporate Action</b> · <b>Securities Position Keeping</b> · <b>Settlement Obligation Management</b> · <b>Asset Securitization</b></p>
+  </article>
+
+  <!-- INVESTIMENTOS -->
+  <article class="area" data-a="ops" id="a-investimentos">
+    <div class="area-head">
+      <span class="area-num">15</span>
+      <h3>Investimentos, Asset e Distribuição</h3>
+      <span class="area-tag">Investment Management</span>
+    </div>
+    <p><strong>Função.</strong> Gerir carteira de terceiros e distribuir produto de investimento — private, varejo, plataforma.</p>
+
+    <h4>Processos</h4>
+    <ul class="tight">
+      <li>Suitability e perfil de investidor</li>
+      <li>Recomendação e alocação</li>
+      <li>Aplicação, resgate, movimentação de cota</li>
+      <li>Cálculo e divulgação de cota</li>
+      <li>Enquadramento regulamentar e de política</li>
+      <li>Performance, benchmark, taxa de administração e de performance</li>
+    </ul>
+
+    <h4>Entidades de domínio</h4>
+    <div class="entities"><span>Carteira</span><span>Fundo</span><span>Cota</span><span>Aplicação</span><span>Perfil de Investidor</span><span>Enquadramento</span></div>
+
+    <div class="note warn">
+      <span class="note-label">Segregação obrigatória</span>
+      <p>Gestão (quem decide), administração (quem responde pelo fundo), custódia (quem guarda) e distribuição (quem vende) são funções separadas por regulação. Isso deve aparecer como fronteira de sistema, não só como política interna.</p>
+    </div>
+
+    <h4>Service domains</h4>
+    <p class="bian"><b>Investment Portfolio Planning</b> · <b>Investment Portfolio Management</b> · <b>Investment Account</b> · <b>Customer Investment Profile</b> · <b>Fund Administration</b></p>
+  </article>
+
+  <!-- RISCOS -->
+  <article class="area" data-a="risk" id="a-riscos">
+    <div class="area-head">
+      <span class="area-num">18</span>
+      <h3>Riscos</h3>
+      <span class="area-tag">Risk &amp; Compliance</span>
+    </div>
+    <p><strong>Função.</strong> Medir, limitar e capitalizar. Risco não vende e não decide operação individual — define o envelope dentro do qual o negócio decide.</p>
+
+    <div class="tw">
+      <table>
+        <thead><tr><th>Tipo</th><th>O que mede</th><th>Onde aparece</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Crédito</strong></td><td>Perda por inadimplência</td><td>PD/LGD/EAD, rating, provisão, concentração</td></tr>
+          <tr><td><strong>Mercado</strong></td><td>Perda por variação de preço</td><td>VaR, stress, sensibilidade, trading vs. banking book</td></tr>
+          <tr><td><strong>Liquidez</strong></td><td>Incapacidade de honrar no prazo</td><td>LCR, NSFR, gap, colchão</td></tr>
+          <tr><td><strong>Operacional</strong></td><td>Falha de processo, pessoa, sistema, externo</td><td>Perdas, RCSA, KRI, capital</td></tr>
+          <tr><td><strong>Socioambiental e climático</strong></td><td>Risco de origem ESG e clima</td><td>Política, exclusão, exposição a evento climático</td></tr>
+          <tr><td><strong>Reputacional / Conduta</strong></td><td>Dano de imagem</td><td>Ouvidoria, mídia, conduta comercial</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note rural">
+      <span class="note-label">Exemplo — crédito rural</span>
+      <p>Aqui risco de crédito e risco climático são a mesma coisa. A safra frustrada é evento climático que vira inadimplência em bloco, correlacionada por região e por cultura. Um modelo de PD que trate produtores como eventos independentes subestima gravemente a cauda.</p>
+      <p>Por isso a régua real é ZARC + seguro + diversificação geográfica da carteira. E por isso a Súmula 298 tem impacto direto na provisão: parte da inadimplência esperada não vira default, vira alongamento compulsório.</p>
+    </div>
+
+    <h4>Service domains</h4>
+    <p class="bian"><b>Credit Risk</b> · <b>Market Risk</b> · <b>Operational Risk</b> · <b>Liquidity Risk</b> · <b>Risk Models</b> · <b>Economic Capital</b> · <b>Regulatory Capital Calculation</b></p>
+  </article>
+
+  <!-- COMPLIANCE -->
+  <article class="area" data-a="risk" id="a-compliance">
+    <div class="area-head">
+      <span class="area-num">19</span>
+      <h3>Compliance, PLD/FT e Regulatório</h3>
+      <span class="area-tag">Regulations &amp; Compliance</span>
+    </div>
+    <p><strong>Função.</strong> Garantir aderência, detectar ilícito e reportar.</p>
+
+    <h4>Processos</h4>
+    <ul class="tight">
+      <li>Monitoramento transacional e detecção de atipicidade</li>
+      <li>Comunicação ao COAF</li>
+      <li>Sanções, embargos e listas restritivas</li>
+      <li>Gestão de política e norma interna</li>
+      <li>Reporte prudencial e contábil ao BCB (SCR, CADOC, CCS)</li>
+      <li>Atendimento a demanda judicial e de autoridade</li>
+      <li>Programa de integridade e conflito de interesse</li>
+    </ul>
+
+    <div class="note rural">
+      <span class="note-label">Exemplo — agro</span>
+      <p>Camada extra de verificação: embargo ambiental do IBAMA, lista de trabalho análogo a escravo, sobreposição com terra indígena ou unidade de conservação, desmatamento na área financiada. Não é compliance genérico — é condição de elegibilidade que impede a contratação, e portanto pertence ao motor de decisão, não a uma checagem posterior.</p>
+    </div>
+
+    <h4>Service domains</h4>
+    <p class="bian"><b>Regulatory Compliance</b> · <b>Financial Crime Case Management</b> · <b>Suspicious Activity Reporting</b> · <b>Regulatory Reporting</b> · <b>Fraud Detection</b></p>
+  </article>
+
+  <!-- CONTABIL -->
+  <article class="area" data-a="sup" id="a-contabil">
+    <div class="area-head">
+      <span class="area-num">20</span>
+      <h3>Controladoria, Contabilidade e Fiscal</h3>
+      <span class="area-tag">Business Support · Finance</span>
+    </div>
+    <p><strong>Função.</strong> Registrar todo evento econômico, apurar resultado, fechar balanço, calcular tributo e reportar.</p>
+
+    <h4>Processos</h4>
+    <ul class="tight">
+      <li>Contabilização por evento (razão, COSIF)</li>
+      <li>Fechamento diário, mensal, anual</li>
+      <li>Conciliação contábil × operacional</li>
+      <li>Apuração de resultado por produto, área e cliente</li>
+      <li>Provisão e impairment</li>
+      <li>Apuração tributária (IR, CSLL, PIS/COFINS, IOF, ISS)</li>
+      <li>Reporte societário e regulatório</li>
+    </ul>
+
+    <div class="note warn">
+      <span class="note-label">Princípio de arquitetura</span>
+      <p>Contabilidade é <strong>consumidora de evento</strong>, não fonte. Todo domínio publica evento de negócio; o motor contábil traduz para lançamento segundo regra parametrizada. Quando cada sistema gera lançamento por conta própria, a conciliação vira trabalho manual permanente.</p>
+    </div>
+
+    <h4>Service domains</h4>
+    <p class="bian"><b>Financial Accounting</b> · <b>Financial Control</b> · <b>Financial Compliance</b> · <b>Product Profitability</b> · <b>Tax Management</b></p>
+  </article>
+</section>
+
+<!-- ============ 3 ============ -->
+<section id="relacoes">
+  <h2 class="sec">Relacionamentos entre áreas</h2>
+  <p class="sec-note">Quatro padrões estruturais e a matriz de dependência.</p>
+
+  <div class="principles">
+    <div class="principle">
+      <h4>Cadastro é raiz</h4>
+      <p>Nenhum domínio de negócio existe sem parte identificada. Cadastro não depende de ninguém internamente — só de agências externas. Todo o resto depende dele.</p>
+    </div>
+    <div class="principle">
+      <h4>Tesouraria é contraparte interno universal</h4>
+      <p>Toda área que gera ativo ou passivo transaciona com a Tesouraria via preço de transferência. É o único ponto onde o descasamento do banco é visível de forma consolidada.</p>
+    </div>
+    <div class="principle">
+      <h4>Risco é envelope, não etapa</h4>
+      <p>Não é um passo do fluxo de crédito — é o limite dentro do qual o fluxo opera. Se aparece como "etapa de aprovação de risco" no BPMN, o modelo provavelmente confunde <em>análise</em> (que é do Crédito) com <em>limite</em> (que é do Risco).</p>
+    </div>
+    <div class="principle">
+      <h4>Contabilidade e Regulatório são sumidouros</h4>
+      <p>Consomem evento de todos os domínios e não devolvem nada ao fluxo operacional. Isso torna a arquitetura orientada a evento praticamente obrigatória.</p>
+    </div>
+  </div>
+
+  <h3>Matriz de dependência</h3>
+  <p class="sec-note" style="margin-bottom:12px">Leitura: a linha <em>depende de</em> a coluna. <span class="dep strong">●</span> dependência forte, bloqueante &nbsp;·&nbsp; <span class="dep soft">○</span> dependência de saída, alimenta &nbsp;·&nbsp; — sem relação direta.</p>
+  <div class="tw">
+    <table>
+      <thead>
+        <tr><th>↓ depende de →</th><th>Cadastro</th><th>Produtos</th><th>Risco</th><th>Tesouraria</th><th>Garantias</th><th>Contábil</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Crédito</strong></td><td class="dep strong">●</td><td class="dep strong">●</td><td class="dep strong">●</td><td class="dep strong">●</td><td class="dep strong">●</td><td class="dep soft">○</td></tr>
+        <tr><td><strong>Câmbio</strong></td><td class="dep strong">●</td><td class="dep strong">●</td><td class="dep strong">●</td><td class="dep strong">●</td><td class="dep soft">○</td><td class="dep soft">○</td></tr>
+        <tr><td><strong>Custódia</strong></td><td class="dep strong">●</td><td class="dep strong">●</td><td class="dep soft">○</td><td class="dep soft">○</td><td class="dep strong">●</td><td class="dep soft">○</td></tr>
+        <tr><td><strong>Pagamentos</strong></td><td class="dep strong">●</td><td class="dep soft">○</td><td class="dep strong">●</td><td class="dep strong">●</td><td class="dep soft">—</td><td class="dep soft">○</td></tr>
+        <tr><td><strong>Investimentos</strong></td><td class="dep strong">●</td><td class="dep strong">●</td><td class="dep strong">●</td><td class="dep soft">○</td><td class="dep soft">—</td><td class="dep soft">○</td></tr>
+        <tr><td><strong>Cobrança</strong></td><td class="dep strong">●</td><td class="dep strong">●</td><td class="dep strong">●</td><td class="dep soft">—</td><td class="dep strong">●</td><td class="dep soft">○</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 4 ============ -->
+<section id="sequencias">
+  <h2 class="sec">Sequências end-to-end</h2>
+  <p class="sec-note">A cor de cada nó indica a business area responsável — o que torna visível quantas vezes o fluxo troca de mão.</p>
+
+  <div class="flow">
+    <h4>4.1 — Onboarding até o primeiro produto</h4>
+    <ol class="chain">
+      <li data-a="sales"><b>Canal</b> <span class="what">— captura</span></li>
+      <li data-a="ref"><b>Cadastro</b> <span class="what">— identificação, verificação, screening</span></li>
+      <li data-a="risk"><b>Compliance</b> <span class="what">— PLD, sanções, PEP</span></li>
+      <li data-a="ref"><b>Cadastro</b> <span class="what">— situação = apto</span></li>
+      <li data-a="ref"><b>Produtos</b> <span class="what">— elegibilidade</span></li>
+      <li data-a="ops"><b>Conta</b> <span class="what">— abertura</span></li>
+      <li data-a="sup"><b>Contábil</b> <span class="what">— reconhecimento</span></li>
+    </ol>
+    <div class="note warn" style="margin-bottom:0">
+      <span class="note-label">Ponto de atenção</span>
+      <p>"Apto" não é booleano. Apto <em>para quê</em>? Uma parte pode estar apta a ter conta e inapta a tomar crédito rural — sem CAR válido, por exemplo. Elegibilidade é sempre relativa a produto.</p>
+    </div>
+  </div>
+
+  <div class="flow">
+    <h4>4.2 — Ciclo completo de crédito</h4>
+    <ol class="chain">
+      <li data-a="sales"><b>Comercial / Canal</b> <span class="what">— proposta</span></li>
+      <li data-a="ref"><b>Cadastro</b> <span class="what">— parte e qualificação</span></li>
+      <li data-a="ext"><b>External Agency</b> <span class="what">— bureau, SCR</span></li>
+      <li data-a="risk"><b>Risco</b> <span class="what">— limite disponível, apetite</span></li>
+      <li data-a="ops"><b>Crédito</b> <span class="what">— motor: score/rating + política</span></li>
+      <li class="gate" data-a="ops">alçada → analista → comitê</li>
+      <li data-a="ref"><b>Produtos</b> <span class="what">— taxa, prazo, encargo aplicável</span></li>
+      <li data-a="risk"><b>Tesouraria</b> <span class="what">— custo de funding, margem</span></li>
+      <li data-a="ops"><b>Garantias</b> <span class="what">— exigência, avaliação, constituição</span></li>
+      <li data-a="ops"><b>Formalização</b> <span class="what">— instrumento e assinatura</span></li>
+      <li data-a="ops"><b>Pagamentos</b> <span class="what">— desembolso</span></li>
+      <li data-a="sup"><b>Contábil</b> <span class="what">— reconhecimento do ativo</span></li>
+      <li data-a="risk"><b>Regulatório</b> <span class="what">— SCR</span></li>
+      <li class="branch-head" data-a="risk"><b>Monitoramento</b> <span class="what">— comportamento, provisão</span></li>
+    </ol>
+    <div class="branches">
+      <div class="branch good">
+        <span class="branch-label">Curso normal</span>
+        <ol class="chain">
+          <li data-a="ops"><b>Quitação</b></li>
+          <li data-a="ops"><b>Garantias</b> <span class="what">— baixa de gravame</span></li>
+          <li data-a="sup"><b>Contábil</b></li>
+        </ol>
+      </div>
+      <div class="branch bad">
+        <span class="branch-label">Curso anormal</span>
+        <ol class="chain">
+          <li data-a="ops"><b>Atraso</b> → <b>Cobrança</b></li>
+          <li data-a="ops"><b>Renegociação</b> → <b>Recuperação</b></li>
+          <li data-a="ops"><b>Garantias</b> <span class="what">— execução</span></li>
+          <li data-a="sup"><b>Contábil</b> <span class="what">— baixa</span></li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="insert">
+      <span class="branch-label">Variante crédito rural — o que se insere no fluxo</span>
+      <p style="margin:0 0 12px;font-size:14.4px;color:var(--ink-2)"><strong>Após o Cadastro:</strong></p>
+      <ol class="chain">
+        <li data-a="ref"><b>Imóvel Rural</b> <span class="what">— matrícula, CAR, área, uso</span></li>
+        <li data-a="risk"><b>Compliance Socioambiental</b> <span class="what">— embargo, sobreposição, lista suja</span></li>
+        <li data-a="ext"><b>ZARC</b> <span class="what">— cultura × município × janela de plantio × solo</span></li>
+        <li data-a="ref"><b>Enquadramento</b> <span class="what">— Pronaf/Pronamp/demais + finalidade</span></li>
+        <li data-a="risk"><b>Fonte de Recurso</b> <span class="what">— equalizável / controlado / livre, com verificação de disponibilidade</span></li>
+        <li data-a="ops"><b>Projeto Técnico</b> <span class="what">— orçamento, ART/laudo</span></li>
+      </ol>
+      <p style="margin:16px 0 12px;font-size:14.4px;color:var(--ink-2)"><strong>Após a Formalização:</strong></p>
+      <ol class="chain">
+        <li data-a="ext"><b>SICOR</b> <span class="what">— registro da operação</span></li>
+        <li data-a="ops"><b>Seguro</b> <span class="what">— Proagro / PSR / privado</span></li>
+      </ol>
+      <p style="margin:16px 0 12px;font-size:14.4px;color:var(--ink-2)"><strong>Durante a vigência:</strong></p>
+      <ol class="chain">
+        <li data-a="ops"><b>Comprovação de aplicação</b> <span class="what">— NF de insumo, pagamento direto</span></li>
+        <li data-a="ops"><b>Fiscalização</b> <span class="what">— in loco ou sensoriamento remoto</span></li>
+      </ol>
+      <div class="branches" style="margin-top:14px">
+        <div class="branch good">
+          <span class="branch-label">Frustração comprovada</span>
+          <ol class="chain"><li data-a="ops"><b>Prorrogação</b> <span class="what">— direito, não liberalidade</span></li></ol>
+        </div>
+        <div class="branch bad">
+          <span class="branch-label">Desvio de finalidade</span>
+          <ol class="chain"><li data-a="ops"><b>Desclassificação</b> <span class="what">— vencimento antecipado</span></li></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flow">
+    <h4>4.3 — Ciclo de pagamento (Pix)</h4>
+    <ol class="chain">
+      <li data-a="sales"><b>Canal</b> <span class="what">— iniciação</span></li>
+      <li data-a="ref"><b>Cadastro</b> <span class="what">— chave, DICT</span></li>
+      <li data-a="risk"><b>Risco</b> <span class="what">— limite e antifraude</span></li>
+      <li data-a="ops"><b>Conta</b> <span class="what">— bloqueio de saldo</span></li>
+      <li data-a="ext"><b>SPI</b> <span class="what">— mensagem</span></li>
+      <li data-a="ext"><b>Liquidação</b> <span class="what">— BCB</span></li>
+      <li data-a="ops"><b>Conta</b> <span class="what">— débito efetivo</span></li>
+      <li data-a="sales"><b>Canal</b> <span class="what">— confirmação</span></li>
+      <li data-a="sup"><b>Contábil</b></li>
+    </ol>
+    <p style="margin:6px 0 0;font-size:14.5px;color:var(--ink-2)">Latência é o requisito dominante. Toda validação que não couber em milissegundos precisa ser pré-computada — limite noturno, perfil transacional — ou tratada de forma assíncrona com compensação.</p>
+  </div>
+
+  <div class="flow">
+    <h4>4.4 — Ciclo de investimento</h4>
+    <ol class="chain">
+      <li data-a="sales"><b>Canal</b> <span class="what">— ordem</span></li>
+      <li data-a="ops"><b>Suitability</b></li>
+      <li data-a="ops"><b>Mesa</b> <span class="what">— execução</span></li>
+      <li data-a="ops"><b>Confirmação</b> → <b>Alocação</b></li>
+      <li data-a="ext"><b>Liquidação</b> <span class="what">— DvP</span></li>
+      <li data-a="ops"><b>Custódia</b> <span class="what">— posição</span></li>
+      <li data-a="ops"><b>Controladoria de Ativos</b> <span class="what">— valorização, cota</span></li>
+      <li data-a="ops"><b>Eventos</b> <span class="what">— juros, amortização, vencimento</span></li>
+      <li data-a="sup"><b>Fiscal</b> <span class="what">— IR na fonte, informe</span></li>
+      <li data-a="sup"><b>Contábil</b></li>
+    </ol>
+  </div>
+
+  <div class="flow">
+    <h4>4.5 — Ciclo de câmbio</h4>
+    <ol class="chain">
+      <li data-a="ops"><b>Mesa</b> <span class="what">— cotação</span></li>
+      <li data-a="ops"><b>Câmbio</b> <span class="what">— contrato e natureza</span></li>
+      <li data-a="risk"><b>Compliance</b> <span class="what">— documentação, fundamento econômico</span></li>
+      <li data-a="ext"><b>Registro regulatório</b></li>
+      <li data-a="ops"><b>Liquidação</b> <span class="what">— moeda estrangeira e reais</span></li>
+      <li data-a="risk"><b>Tesouraria</b> <span class="what">— posição cambial consolidada</span></li>
+      <li data-a="risk"><b>Risco</b> <span class="what">— exposição</span></li>
+      <li data-a="sup"><b>Contábil</b> <span class="what">— conversão e variação</span></li>
+    </ol>
+  </div>
+
+  <div class="flow">
+    <h4>4.6 — Fechamento diário: a sequência que ninguém desenha e todo mundo sofre</h4>
+    <ol class="chain">
+      <li data-a="ops"><b>D0 corte</b></li>
+      <li data-a="ops"><b>Backoffice</b> <span class="what">— captura de todos os eventos do dia</span></li>
+      <li data-a="ops"><b>Conciliação</b> <span class="what">— interno × câmaras × depositárias × correspondentes</span></li>
+      <li data-a="ops"><b>Quebras</b> <span class="what">— identificação, classificação, tratamento</span></li>
+      <li data-a="risk"><b>Marcação a mercado</b> <span class="what">— curvas e preços de fechamento</span></li>
+      <li data-a="risk"><b>Risco</b> <span class="what">— posição, VaR, limites, consumo de capital</span></li>
+      <li data-a="risk"><b>Provisão</b> <span class="what">— reavaliação da carteira de crédito</span></li>
+      <li data-a="sup"><b>Contábil</b> <span class="what">— lançamentos, fechamento do razão</span></li>
+      <li data-a="risk"><b>Regulatório</b> <span class="what">— extração de bases para reporte</span></li>
+      <li data-a="sup"><b>Divulgação interna</b> <span class="what">— saldo, posição, resultado</span></li>
+    </ol>
+    <p style="margin:6px 0 0;font-size:14.5px;color:var(--ink-2)">Essa sequência impõe as janelas de batch e determina, na prática, o quanto o banco consegue ser real-time. É comum times de produto desenharem jornada 24×7 sem perceber que o fechamento contábil ainda é D+1.</p>
+  </div>
+</section>
+
+<!-- ============ 5 ============ -->
+<section id="arquitetura">
+  <h2 class="sec">Implicações de arquitetura</h2>
+  <p class="sec-note">Cinco conclusões que decorrem do mapa.</p>
+
+  <div class="principles">
+    <div class="principle">
+      <h4>Fronteira de domínio ≠ fronteira de área</h4>
+      <p>Cobrança e Crédito são áreas distintas mas compartilham a entidade <code>Operação</code>. Custódia e Investimentos compartilham <code>Posição</code>. O corte de microsserviço deve seguir a entidade e seu ciclo de vida, não o organograma.</p>
+    </div>
+    <div class="principle">
+      <h4>Estado explícito, nunca flag booleano</h4>
+      <p><code>prorrogado = true</code> perde por quê, quando, com que fundamento e quem autorizou. Em domínio regulado, a trilha de auditoria <em>é</em> o requisito funcional — especialmente onde existe direito subjetivo do cliente.</p>
+    </div>
+    <div class="principle">
+      <h4>Evento de negócio como contrato de integração</h4>
+      <p>Contabilidade, Risco e Regulatório são consumidores dos mesmos eventos, com projeções diferentes. Um evento bem modelado atende os três; três extrações batch diferentes atendem mal os três.</p>
+    </div>
+    <div class="principle">
+      <h4>Dados de referência com vigência</h4>
+      <p>Produto, taxa, política, tabela de encargos, ZARC — tudo tem vigência. Consulta sem data-base é fonte garantida de divergência entre o que foi contratado e o que o sistema mostra hoje.</p>
+    </div>
+    <div class="principle">
+      <h4>Onde o BIAN ajuda de fato</h4>
+      <p>Como <em>checklist de completude</em> ("esqueci algum domínio?") e como <em>vocabulário neutro</em> em conversa com fornecedor e integrador. Onde não ajuda: como planta de implementação. Ninguém constrói 322 serviços. O uso saudável é mapear o legado existente contra o landscape para achar sobreposição e lacuna.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6 ============ -->
+<section id="glossario">
+  <h2 class="sec">Glossário</h2>
+  <p class="sec-note">Infraestrutura de mercado brasileira.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Sigla</th><th>O que é</th></tr></thead>
+      <tbody>
+        <tr><td><strong>SPB</strong></td><td>Sistema de Pagamentos Brasileiro — o arcabouço todo</td></tr>
+        <tr><td><strong>STR</strong></td><td>Sistema de Transferência de Reservas; liquidação bruta em tempo real no BCB</td></tr>
+        <tr><td><strong>SPI</strong></td><td>Sistema de Pagamentos Instantâneos — infraestrutura do Pix</td></tr>
+        <tr><td><strong>DICT</strong></td><td>Diretório de chaves Pix</td></tr>
+        <tr><td><strong>SELIC</strong></td><td>Sistema Especial de Liquidação e de Custódia — títulos públicos federais</td></tr>
+        <tr><td><strong>B3</strong></td><td>Bolsa, câmaras de liquidação, depositária e registradora de ativos privados</td></tr>
+        <tr><td><strong>Nuclea</strong></td><td>Ex-CIP; compensação de boleto, DDA, SLC</td></tr>
+        <tr><td><strong>SCR</strong></td><td>Sistema de Informações de Créditos do BCB</td></tr>
+        <tr><td><strong>CCS</strong></td><td>Cadastro de Clientes do SFN</td></tr>
+        <tr><td><strong>SISBAJUD</strong></td><td>Bloqueio judicial de ativos</td></tr>
+        <tr><td><strong>COAF</strong></td><td>Órgão de inteligência financeira</td></tr>
+        <tr><td><strong>SICOR</strong></td><td>Sistema de Operações do Crédito Rural e do Proagro (BCB)</td></tr>
+        <tr><td><strong>MCR</strong></td><td>Manual de Crédito Rural</td></tr>
+        <tr><td><strong>ZARC</strong></td><td>Zoneamento Agrícola de Risco Climático</td></tr>
+        <tr><td><strong>CAR</strong></td><td>Cadastro Ambiental Rural</td></tr>
+        <tr><td><strong>Open Finance</strong></td><td>Compartilhamento de dados e iniciação de pagamento sob consentimento</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer>
+    Documento de referência. Valores, alíquotas, versões normativas e composição de fontes do Plano Safra mudam por ano-safra — confirmar sempre na fonte primária: BCB, CVM, ANBIMA, B3, MAPA.
+  </footer>
+</section>
+
+</main>
+</div>
+
+<script>
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  var targets = links.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  if(!('IntersectionObserver' in window) || !targets.length) return;
+
+  var visible = new Set();
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ visible.add(e.target.id); } else { visible.delete(e.target.id); }
+    });
+    var current = null;
+    for(var i=0;i<targets.length;i++){
+      if(visible.has(targets[i].id)){ current = targets[i].id; break; }
+    }
+    links.forEach(function(a){
+      a.classList.toggle('active', current && a.getAttribute('href') === '#'+current);
+    });
+  }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
+
+  targets.forEach(function(t){ obs.observe(t); });
+})();
+</script>
+
+</body>
+</html>
